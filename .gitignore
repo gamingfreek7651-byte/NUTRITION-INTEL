@@ -1,0 +1,44 @@
+# Python virtual environment
+venv/
+ENV/
+env/
+.venv/
+Scripts/
+Lib/
+
+# Environment secrets and local configurations
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python bytecode caches and temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+*.manifest
+*.spec
+
+# IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+
+# Agent and temporary developer files
+scratch/
+run.txt
+
+# Large scraped datasets
+# Uncomment the line below if you want to exclude raw CSVs from your public repo
+# *.csv

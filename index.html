@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Nutrition Supplement Competitive Intelligence Platform</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- LANDING PORTAL VIEW -->
+    <div id="landingView" class="landing-container">
+        <!-- LANDING PAGE HEADER -->
+        <header class="landing-header">
+            <div class="logo">
+                <span class="logo-accent">A</span>
+                <span class="logo-text">NUTRITION <span class="logo-sub">INTEL</span></span>
+            </div>
+            <nav class="landing-nav">
+                <a href="#features" class="landing-nav-link">Analytical Modules</a>
+                <a href="#pipeline" class="landing-nav-link">Data Pipeline</a>
+                <a href="#tech" class="landing-nav-link">Technical Stack</a>
+                <button class="landing-cta-btn">Launch Console</button>
+            </nav>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="landing-hero">
+            <div class="hero-badge">Case Study &amp; SaaS Analytics Prototype</div>
+            <h1 class="hero-title">Amazon India Nutrition supplement Competitive Intelligence</h1>
+            <p class="hero-subtitle">
+                An investor-grade data analytics platform that normalizes scraped Amazon listings into unified competitive models. Demonstrates advanced data engineering pipeline calculations, sentiment indexes, and category whitespace detection.
+            </p>
+            <div class="hero-actions">
+                <button class="btn-primary-large">Launch Analytics Console</button>
+                <a href="#pipeline" class="btn-secondary-large">Explore Data Architecture</a>
+            </div>
+        </section>
+
+        <!-- ANALYTICS FEATURES SECTION -->
+        <section id="features" class="landing-section">
+            <div class="section-header">
+                <span class="section-label">Business Intelligence</span>
+                <h2 class="section-title">Strategic Market Insights</h2>
+                <p class="section-desc">Unlock data-driven decision making with customized analytics modules engineered to surface key competitor positions.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon">📊</div>
+                    <h3 class="feature-card-title">McKinsey-Style Matrices</h3>
+                    <p class="feature-card-desc">Head-to-head brand comparison mapping across average rating, ASP, market share of voice, and discount ranges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">💡</div>
+                    <h3 class="feature-card-title">Opportunity Engine</h3>
+                    <p class="feature-card-desc">Machine classification categorizing items into Market Leaders, Hidden Gems, Rising Stars, and Underperformers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">💸</div>
+                    <h3 class="feature-card-title">Pricing &amp; Value Scores</h3>
+                    <p class="feature-card-desc">Deep-dive correlation graphs comparing price tiers, discount dependency, and calculated protein-per-rupee ratios.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">🎯</div>
+                    <h3 class="feature-card-title">Whitespace Detection</h3>
+                    <p class="feature-card-desc">Algorithmic scoring highlighting high-value consumer niches with low catalog saturation (< 12 competitors).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA PIPELINE SECTION -->
+        <section id="pipeline" class="landing-section bg-alt">
+            <div class="section-header">
+                <span class="section-label">Data Engineering</span>
+                <h2 class="section-title">End-to-End Data Pipeline Architecture</h2>
+                <p class="section-desc">From messy scraped raw data listings to clean, optimized, schema-compliant JSON datastores.</p>
+            </div>
+            <div class="pipeline-flow">
+                <div class="pipeline-step">
+                    <div class="step-num">01</div>
+                    <h4 class="step-title">Ingest Messy Listings</h4>
+                    <p class="step-desc">Extract raw data fields from Optimum Nutrition, MuscleBlaze, Nutrabay, Nakpro, and AS-IT-IS CSV files.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">02</div>
+                    <h4 class="step-title">Standardize &amp; Translate</h4>
+                    <p class="step-desc">Normalize Hindi text tags, convert weights (lbs/g to standard kg), and repair price format values.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">03</div>
+                    <h4 class="step-title">Calculate Analytics Scores</h4>
+                    <p class="step-desc">Apply logarithmic scaling for Demand Index, composite Value ratings, and Amazon Best Seller Rank positioning.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">04</div>
+                    <h4 class="step-title">Generate data.json</h4>
+                    <p class="step-desc">Serialize schema-compliant object tree. Offloads heavy computation from frontend for high responsiveness.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECHNICAL STACK SECTION -->
+        <section id="tech" class="landing-section">
+            <div class="section-header">
+                <span class="section-label">Technical Stack</span>
+                <h2 class="section-title">Platform Tech &amp; Engineering Skills</h2>
+                <p class="section-desc">Demonstrating modern backend parsing, state preservation, dynamic visualization, and clean responsive CSS architectures.</p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-box">
+                    <div class="tech-icon">🐍</div>
+                    <h4>Python Data Parser</h4>
+                    <p>Ingestion script (`process_data.py`) utilising standard `csv`, `re`, and `json` libraries. Computes math metrics and classifies opportunity segments.</p>
+                </div>
+                <div class="tech-box">
+                    <div class="tech-icon">⚡</div>
+                    <h4>Vanilla JavaScript ES6</h4>
+                    <p>Custom state object coordinating multiple filter scopes (brands, categories, pricing ranges). Drives cross-filtering views synchronously.</p>
+                </div>
+                <div class="tech-box">
+                    <div class="tech-icon">📈</div>
+                    <h4>Chart.js Visuals</h4>
+                    <p>Highly integrated responsive visual canvas instances detailing scatter positioning bubbles, bar distributions, and stack matrices.</p>
+                </div>
+                <div class="tech-box">
+                    <div class="tech-icon">🎨</div>
+                    <h4>Vanilla CSS Custom Styling</h4>
+                    <p>Pure design framework employing root variables, custom variables, soft drop shadows, and responsive layout spacing guidelines.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LANDING PORTFOLIO FOOTER -->
+        <footer class="landing-footer">
+            <p class="footer-credit">Built by <span class="highlight-credit-dark">Yogesh Kumar</span> | Amazon Nutrition Market Intelligence Platform</p>
+        </footer>
+    </div>
+
+    <!-- MAIN CONSOLE LAYOUT -->
+    <div class="app-container" id="appConsoleView" style="display: none;">
+        <!-- LEFT NAVIGATION SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-accent">A</span>
+                    <span class="logo-text">NUTRITION <span class="logo-sub">INTEL</span></span>
+                </div>
+                <button class="toggle-btn" id="sidebarCollapseBtn" title="Collapse Sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="6" y2="20"></line><line x1="18" y1="12" x2="6" y2="12"></line><line x1="18" y1="4" x2="6" y2="4"></line></svg>
+                </button>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item" data-tab="portal">
+                    <span class="nav-icon" title="Project Portal">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></svg>
+                    </span>
+                    <span class="nav-label">Project Portal</span>
+                </a>
+                <a href="#" class="nav-item active" data-tab="overview">
+                    <span class="nav-icon" title="Executive Overview">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    </span>
+                    <span class="nav-label">Executive Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="competitive">
+                    <span class="nav-icon" title="Competitive Intelligence">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </span>
+                    <span class="nav-label">Competitive Intel</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="pricing">
+                    <span class="nav-icon" title="Pricing Strategy">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </span>
+                    <span class="nav-label">Pricing Strategy</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="performance">
+                    <span class="nav-icon" title="Product Performance">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </span>
+                    <span class="nav-label">Product Performance</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="sentiment">
+                    <span class="nav-icon" title="Consumer Sentiment">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                    </span>
+                    <span class="nav-label">Consumer Sentiment</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="portfolio">
+                    <span class="nav-icon" title="Portfolio Analysis">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </span>
+                    <span class="nav-label">Portfolio Analysis</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="opportunity">
+                    <span class="nav-icon" title="Opportunity Center">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    </span>
+                    <span class="nav-label">Opportunity Center</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="refresh-info" style="margin-bottom: 8px;">
+                    <div class="refresh-title">Data Refreshed</div>
+                    <div class="refresh-date" id="refreshDate">2026-06-20</div>
+                </div>
+                <div class="portfolio-footer-text" style="font-size: 9px; line-height: 1.3; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; color: #6B7280; white-space: normal;">
+                    Built by <span class="highlight-credit-light">Yogesh Kumar</span> | Amazon Nutrition Market Intelligence Platform
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN LAYOUT -->
+        <main class="main-layout">
+            <!-- TOP COMMAND BAR -->
+            <header class="top-bar">
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="globalSearchInput" placeholder="Search products, specifications, flavors..." class="search-input">
+                </div>
+                
+                <div class="active-filters" id="activeFiltersContainer">
+                    <!-- Badges injected by JS -->
+                </div>
+                
+                <div class="header-actions">
+                    <button class="action-btn" id="exportBtn" title="Export current views to CSV">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export</span>
+                    </button>
+                    <button class="action-btn filter-toggle-btn" id="filterPaneToggleBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <span>Filters</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- MAIN WORKSPACE -->
+            <div class="workspace-wrapper">
+                
+                <!-- CONTENT PAGES CONTAINER -->
+                <div class="content-container">
+                    
+                    <!-- 1. EXECUTIVE OVERVIEW PAGE -->
+                    <section class="content-page active" id="page-overview">
+                        <div class="page-header-title">
+                            <h1>Market Overview &amp; Share</h1>
+                            <p>Who dominates the Amazon India nutrition supplement segment?</p>
+                        </div>
+                        
+                        <!-- KPI Strip -->
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-meta">Total Products</div>
+                                <div class="kpi-value" id="kpi-total-products">-</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-meta">Avg Selling Price</div>
+                                <div class="kpi-value" id="kpi-avg-price">-</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-meta">Avg Rating</div>
+                                <div class="kpi-value" id="kpi-avg-rating">-</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-meta">Total Reviews</div>
+                                <div class="kpi-value" id="kpi-total-reviews">-</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-meta">Market Leader</div>
+                                <div class="kpi-value" id="kpi-market-leader">-</div>
+                            </div>
+                        </div>
+
+                        <!-- Main Charts Row -->
+                        <div class="dashboard-grid">
+                            <!-- Hero Visualization: Market Share by Reviews -->
+                            <div class="col-span-8 card">
+                                <div class="card-header">
+                                    <h2>Brand Market Share (Share of Voice by Reviews)</h2>
+                                    <span class="card-subtitle">Primary indicator of customer purchase volume &amp; popularity</span>
+                                </div>
+                                <div class="chart-container" style="height: 320px; position: relative;">
+                                    <canvas id="marketShareChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <!-- Brand Positioning Matrix -->
+                            <div class="col-span-4 card">
+                                <div class="card-header">
+                                    <h2>Brand Core Stats</h2>
+                                    <span class="card-subtitle">Key metrics at a glance</span>
+                                </div>
+                                <div class="stats-list" id="brandOverviewStatsList">
+                                    <!-- Injected by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Category Distribution -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Product Distribution by Category</h2>
+                                </div>
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="categoryDistributionChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <!-- Top Performing Products Summary -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Market Demand Leaders</h2>
+                                    <span class="card-subtitle">Top products across all categories by reviews</span>
+                                </div>
+                                <div class="table-wrapper">
+                                    <table class="data-table" id="overviewTopProductsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Brand</th>
+                                                <th>Rating</th>
+                                                <th>Reviews</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Injected by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 2. COMPETITIVE INTELLIGENCE -->
+                    <section class="content-page" id="page-competitive">
+                        <div class="page-header-title">
+                            <h1>Competitive Intelligence</h1>
+                            <p>Head-to-head brand benchmarking and market concentration analysis.</p>
+                        </div>
+                        
+                        <!-- Benchmarking Matrix Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>McKinsey-Style Competitive Benchmarking Matrix</h2>
+                                <span class="card-subtitle">Strategic comparison across all key brand metrics</span>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="matrix-table" id="competitiveBenchmarkingTable">
+                                    <!-- Table structure dynamically injected by JS -->
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Positioning Map (Scatter Plot) -->
+                            <div class="col-span-8 card">
+                                <div class="card-header">
+                                    <h2>Competitive Positioning Map (Price vs Rating)</h2>
+                                    <span class="card-subtitle">Scatter mapping of all filtered products (Bubble size = Review count)</span>
+                                </div>
+                                <div class="chart-container" style="height: 380px;">
+                                    <canvas id="competitivePositioningChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Market Concentration Card -->
+                            <div class="col-span-4 card">
+                                <div class="card-header">
+                                    <h2>Market Share of Voice</h2>
+                                    <span class="card-subtitle">Review Share Concentration</span>
+                                </div>
+                                <div class="chart-container" style="height: 250px;">
+                                    <canvas id="marketConcentrationChart"></canvas>
+                                </div>
+                                <div class="sentiment-meta-info" id="concentrationSummaryText" style="margin-top: 15px; font-size: 13px; color: var(--color-secondary);">
+                                    <!-- Text description injected by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3. PRICING STRATEGY -->
+                    <section class="content-page" id="page-pricing">
+                        <div class="page-header-title">
+                            <h1>Pricing &amp; Position Strategy</h1>
+                            <p>Analyze how brands use price tiers, discounts, and value ratios for marketplace advantage.</p>
+                        </div>
+                        
+                        <div class="dashboard-grid">
+                            <!-- Price Segmentation Tier Count -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Brand Price Tier Coverage</h2>
+                                    <span class="card-subtitle">Budget (&lt; ₹1500), Mid (₹1500 - ₹3000), Premium (&gt; ₹3000)</span>
+                                </div>
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="priceTiersChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Discount Dependency -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Discount Dependency Analysis</h2>
+                                    <span class="card-subtitle">Average discount percentage vs. average product rating</span>
+                                </div>
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="discountDependencyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Table by Category -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Category Price Benchmarking</h2>
+                                <span class="card-subtitle">Compare Average Selling Price (ASP) across categories</span>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="data-table" id="pricingBenchmarkTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Optimum Nutrition</th>
+                                            <th>MuscleBlaze</th>
+                                            <th>Nutrabay</th>
+                                            <th>Nakpro</th>
+                                            <th>AS-IT-IS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 4. PRODUCT PERFORMANCE -->
+                    <section class="content-page" id="page-performance">
+                        <div class="page-header-title">
+                            <h1>Product Performance Center</h1>
+                            <p>Detailed product leaderboard, best seller rankings, and catalog explorer.</p>
+                        </div>
+                        
+                        <!-- Catalog Table Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Amazon India Product Intelligence Catalog</h2>
+                                <span class="card-subtitle">Sortable and filterable matrix of all scraped products</span>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="data-table" id="productPerformanceCatalogTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 60px;">Image</th>
+                                            <th>Product Name</th>
+                                            <th>Brand</th>
+                                            <th>Price</th>
+                                            <th>Rating</th>
+                                            <th>Reviews</th>
+                                            <th>BSR Rank</th>
+                                            <th>Popularity</th>
+                                            <th style="width: 80px; text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 5. CONSUMER SENTIMENT -->
+                    <section class="content-page" id="page-sentiment">
+                        <div class="page-header-title">
+                            <h1>Consumer Sentiment &amp; Brand Trust</h1>
+                            <p>What do buyers actually think? Review sentiment indices and trust score charts.</p>
+                        </div>
+                        
+                        <div class="dashboard-grid">
+                            <!-- Trust Index Score Card -->
+                            <div class="col-span-4 card">
+                                <div class="card-header">
+                                    <h2>Brand Sentiment Index</h2>
+                                    <span class="card-subtitle">Ratio of highly positive to negative ratings</span>
+                                </div>
+                                <div class="chart-container" style="height: 320px;">
+                                    <canvas id="brandTrustScoreChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Rating Distribution Chart -->
+                            <div class="col-span-8 card">
+                                <div class="card-header">
+                                    <h2>Overall Rating Frequency</h2>
+                                    <span class="card-subtitle">Total products grouped by star-rating levels</span>
+                                </div>
+                                <div class="chart-container" style="height: 320px;">
+                                    <canvas id="ratingDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Brand Review Metrics table -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Brand Satisfaction Ledger</h2>
+                                <span class="card-subtitle">Key ratings and sentiment matrices</span>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="data-table" id="satisfactionLedgerTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Brand</th>
+                                            <th>Average Rating</th>
+                                            <th>Total Ratings Received</th>
+                                            <th>Estimated Positive Sentiment %</th>
+                                            <th>Estimated Negative Sentiment %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 6. PORTFOLIO ANALYSIS -->
+                    <section class="content-page" id="page-portfolio">
+                        <div class="page-header-title">
+                            <h1>Portfolio &amp; Assortment Analysis</h1>
+                            <p>Assortment coverage, flavor diversity, form factors, and supplement metrics.</p>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Category Coverage Grid -->
+                            <div class="col-span-7 card">
+                                <div class="card-header">
+                                    <h2>Assortment Matrix (Category Penetration)</h2>
+                                    <span class="card-subtitle">Total product count by category and brand</span>
+                                </div>
+                                <div class="table-wrapper">
+                                    <table class="matrix-table" id="assortmentMatrixTable">
+                                        <!-- Injected by JS -->
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Form factor Distribution -->
+                            <div class="col-span-5 card">
+                                <div class="card-header">
+                                    <h2>Item Form Factor split</h2>
+                                    <span class="card-subtitle">Distribution of catalog across powders, tablets, capsules</span>
+                                </div>
+                                <div class="chart-container" style="height: 250px;">
+                                    <canvas id="formFactorChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Flavor Counts -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Assortment Diversity (Unique Flavor Counts)</h2>
+                                    <span class="card-subtitle">Variety count in catalog</span>
+                                </div>
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="flavorCountChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Protein / weight metrics summary -->
+                            <div class="col-span-6 card">
+                                <div class="card-header">
+                                    <h2>Portfolio Metrics Comparison</h2>
+                                    <span class="card-subtitle">Avg weight, serving sizes and protein counts</span>
+                                </div>
+                                <div class="table-wrapper">
+                                    <table class="data-table" id="portfolioCompareTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Brand</th>
+                                                <th>Avg Weight (Kg)</th>
+                                                <th>Avg Servings</th>
+                                                <th>Avg Protein (g)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Injected by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 7. OPPORTUNITY CENTER -->
+                    <section class="content-page" id="page-opportunity">
+                        <div class="page-header-title">
+                            <h1>Opportunity &amp; Strategy Center</h1>
+                            <p>Algorithmic whitespace opportunities, growth targets, and portfolio enhancements.</p>
+                        </div>
+
+                        <!-- Whitespace Analysis summary -->
+                        <div class="dashboard-grid">
+                            <div class="col-span-8 card">
+                                <div class="card-header">
+                                    <h2>Market Niches &amp; Whitespace Opportunities</h2>
+                                    <span class="card-subtitle">Niches with high customer rating and price but low competing products</span>
+                                </div>
+                                <div class="table-wrapper">
+                                    <table class="data-table" id="whitespaceOpportunitiesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Niche Category</th>
+                                                <th>Competing Catalog Count</th>
+                                                <th>Avg Retail Price</th>
+                                                <th>Avg Rating</th>
+                                                <th>Whitespace Opportunity Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Injected by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-span-4 card recommendation-card">
+                                <div class="card-header">
+                                    <h2>Executive Strategic Advisory</h2>
+                                    <span class="card-subtitle">Consultant Recommendations</span>
+                                </div>
+                                <div class="recommendations-content" id="executiveRecommendationsList">
+                                    <!-- Injected by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Strategic Product Slots -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="opportunity-tabs" id="opportunityTabsHeader">
+                                    <button class="opp-tab-btn active" data-opp="gems">Hidden Gems</button>
+                                    <button class="opp-tab-btn" data-opp="stars">Rising Stars</button>
+                                    <button class="opp-tab-btn" data-opp="underperformers">Underperforming</button>
+                                    <button class="opp-tab-btn" data-opp="premium">Premium Winners</button>
+                                </div>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="data-table" id="opportunityProductsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Brand</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Rating</th>
+                                            <th>Reviews</th>
+                                            <th>Score</th>
+                                            <th style="width: 80px; text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- DASHBOARD GENERAL FOOTER -->
+                    <footer class="dashboard-footer">
+                        <p>Built by <span class="highlight-credit-dark">Yogesh Kumar</span> | Amazon Nutrition Market Intelligence Platform</p>
+                    </footer>
+                </div>
+
+                <!-- RIGHT SIDEBAR FILTER PANE -->
+                <aside class="filter-pane" id="filterPane">
+                    <div class="filter-header">
+                        <h3>Filters</h3>
+                        <button class="filter-clear-btn" id="filterResetBtn">Reset All</button>
+                    </div>
+                    
+                    <div class="filter-groups-wrapper">
+                        <!-- Brand -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Brands</h4>
+                            <div class="filter-options-list" id="filterBrandsList">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Category -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Categories</h4>
+                            <div class="filter-options-list" id="filterCategoriesList">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Minimum Rating</h4>
+                            <div class="rating-filter-wrapper">
+                                <select id="filterRatingSelect" class="filter-select">
+                                    <option value="0">All Ratings</option>
+                                    <option value="4.5">4.5+ Stars</option>
+                                    <option value="4.0">4.0+ Stars</option>
+                                    <option value="3.5">3.5+ Stars</option>
+                                    <option value="3.0">3.0+ Stars</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Price Range</h4>
+                            <div class="price-inputs">
+                                <input type="number" id="filterPriceMin" placeholder="Min" class="price-input">
+                                <span class="price-separator">to</span>
+                                <input type="number" id="filterPriceMax" placeholder="Max" class="price-input">
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Availability</h4>
+                            <div class="filter-options-list">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="in_stock" id="filterStockIn" checked>
+                                    <span>In Stock Only</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- PRODUCT DETAIL DRAWER (POPUP WINDOW) -->
+    <div class="detail-drawer" id="detailDrawer">
+        <button class="drawer-close-btn" id="drawerCloseBtn" title="Close Drawer">&times;</button>
+        <div class="drawer-content" id="drawerContent">
+            <!-- Injected dynamically by JS -->
+        </div>
+    </div>
+    
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
