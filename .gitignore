@@ -42,3 +42,5 @@ run.txt
 # Large scraped datasets
 # Uncomment the line below if you want to exclude raw CSVs from your public repo
 # *.csv
+
+.vercel

@@ -8,10 +8,12 @@ const state = {
     filters: {
         brands: new Set(),
         categories: new Set(),
-        rating: 0.0,
+        ratingMin: 0.0,
+        ratingMax: 5.0,
         priceMin: null,
         priceMax: null,
-        stockOnly: false,
+        availability: 'all',
+        flavour: 'all',
         search: ''
     },
     opportunityTab: 'gems'
@@ -31,6 +33,7 @@ function initEventListeners() {
         btn.addEventListener('click', () => {
             document.getElementById('landingView').style.display = 'none';
             document.getElementById('appConsoleView').style.display = 'flex';
+            window.scrollTo(0, 0);
             switchTab('overview');
         });
     });
@@ -40,6 +43,12 @@ function initEventListeners() {
     const sidebarBtn = document.getElementById('sidebarCollapseBtn');
     if (sidebarBtn) {
         sidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    }
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
         });
     }
@@ -98,20 +107,36 @@ function initEventListeners() {
         });
     }
 
-    // Rating Filter Select
-    const ratingSelect = document.getElementById('filterRatingSelect');
-    if (ratingSelect) {
-        ratingSelect.addEventListener('change', (e) => {
-            state.filters.rating = parseFloat(e.target.value);
+    // Rating Range Filters
+    const ratingMinSelect = document.getElementById('filterRatingMin');
+    const ratingMaxSelect = document.getElementById('filterRatingMax');
+    if (ratingMinSelect) {
+        ratingMinSelect.addEventListener('change', (e) => {
+            state.filters.ratingMin = parseFloat(e.target.value);
+            applyFiltersAndRender();
+        });
+    }
+    if (ratingMaxSelect) {
+        ratingMaxSelect.addEventListener('change', (e) => {
+            state.filters.ratingMax = parseFloat(e.target.value);
             applyFiltersAndRender();
         });
     }
 
-    // Availability Filter
-    const stockCheckbox = document.getElementById('filterStockIn');
-    if (stockCheckbox) {
-        stockCheckbox.addEventListener('change', (e) => {
-            state.filters.stockOnly = e.target.checked;
+    // Availability Filter Select
+    const availabilitySelect = document.getElementById('filterAvailabilitySelect');
+    if (availabilitySelect) {
+        availabilitySelect.addEventListener('change', (e) => {
+            state.filters.availability = e.target.value;
+            applyFiltersAndRender();
+        });
+    }
+
+    // Flavour Filter Select
+    const flavourSelect = document.getElementById('filterFlavourSelect');
+    if (flavourSelect) {
+        flavourSelect.addEventListener('change', (e) => {
+            state.filters.flavour = e.target.value;
             applyFiltersAndRender();
         });
     }
@@ -233,25 +258,51 @@ function initFiltersUI() {
         label.appendChild(span);
         categoriesList.appendChild(label);
     });
+    // Flavour Dropdown List
+    const flavourSelect = document.getElementById('filterFlavourSelect');
+    if (flavourSelect) {
+        flavourSelect.innerHTML = '<option value="all">All Flavours</option>';
+        const flavoursSet = new Set(allData.products.map(p => p.flavour));
+        Array.from(flavoursSet).sort().forEach(flvName => {
+            const option = document.createElement('option');
+            option.value = flvName;
+            option.textContent = flvName;
+            flavourSelect.appendChild(option);
+        });
+    }
 }
 
 // RESET ALL FILTER SELECTIONS
 function resetAllFilters() {
     state.filters.brands.clear();
     state.filters.categories.clear();
-    state.filters.rating = 0.0;
+    state.filters.ratingMin = 0.0;
+    state.filters.ratingMax = 5.0;
     state.filters.priceMin = null;
     state.filters.priceMax = null;
-    state.filters.stockOnly = false;
+    state.filters.availability = 'all';
+    state.filters.flavour = 'all';
     state.filters.search = '';
 
     // Clear UI controls
     document.querySelectorAll('#filterBrandsList input').forEach(input => input.checked = false);
     document.querySelectorAll('#filterCategoriesList input').forEach(input => input.checked = false);
-    document.getElementById('filterRatingSelect').value = "0";
+    
+    const rMin = document.getElementById('filterRatingMin');
+    if (rMin) rMin.value = "0";
+    
+    const rMax = document.getElementById('filterRatingMax');
+    if (rMax) rMax.value = "5";
+    
     document.getElementById('filterPriceMin').value = "";
     document.getElementById('filterPriceMax').value = "";
-    document.getElementById('filterStockIn').checked = false;
+    
+    const avail = document.getElementById('filterAvailabilitySelect');
+    if (avail) avail.value = "all";
+    
+    const flav = document.getElementById('filterFlavourSelect');
+    if (flav) flav.value = "all";
+    
     document.getElementById('globalSearchInput').value = "";
 
     applyFiltersAndRender();
@@ -307,8 +358,8 @@ function applyFiltersAndRender() {
             return false;
         }
         
-        // Rating filter
-        if (product.rating < state.filters.rating) {
+        // Rating Range filter
+        if (product.rating < state.filters.ratingMin || product.rating > state.filters.ratingMax) {
             return false;
         }
         
@@ -322,8 +373,16 @@ function applyFiltersAndRender() {
             return false;
         }
         
-        // Availability / Stock Filter
-        if (state.filters.stockOnly && product.availability !== "In stock") {
+        // Availability Filter
+        if (state.filters.availability === "in_stock" && product.availability !== "In Stock") {
+            return false;
+        }
+        if (state.filters.availability === "out_of_stock" && product.availability !== "Out Of Stock") {
+            return false;
+        }
+        
+        // Flavour Filter
+        if (state.filters.flavour !== "all" && product.flavour !== state.filters.flavour) {
             return false;
         }
         
@@ -333,7 +392,8 @@ function applyFiltersAndRender() {
                 product.title.toLowerCase().includes(state.filters.search) || 
                 product.brand.toLowerCase().includes(state.filters.search) || 
                 product.category.toLowerCase().includes(state.filters.search) || 
-                product.flavour.toLowerCase().includes(state.filters.search);
+                product.flavour.toLowerCase().includes(state.filters.search) ||
+                (product.size && product.size.toLowerCase().includes(state.filters.search));
             if (!matchesSearch) return false;
         }
 
@@ -394,10 +454,14 @@ function renderFilterBadges() {
     });
 
     // Rating
-    if (state.filters.rating > 0) {
-        createBadge(`Rating: ${state.filters.rating}+ ⭐`, () => {
-            state.filters.rating = 0.0;
-            document.getElementById('filterRatingSelect').value = "0";
+    if (state.filters.ratingMin > 0 || state.filters.ratingMax < 5) {
+        createBadge(`Rating: ${state.filters.ratingMin}-${state.filters.ratingMax} ⭐`, () => {
+            state.filters.ratingMin = 0.0;
+            state.filters.ratingMax = 5.0;
+            const rMin = document.getElementById('filterRatingMin');
+            if (rMin) rMin.value = "0";
+            const rMax = document.getElementById('filterRatingMax');
+            if (rMax) rMax.value = "5";
             applyFiltersAndRender();
         });
     }
@@ -419,10 +483,22 @@ function renderFilterBadges() {
     }
 
     // Availability
-    if (state.filters.stockOnly) {
-        createBadge("In Stock Only", () => {
-            state.filters.stockOnly = false;
-            document.getElementById('filterStockIn').checked = false;
+    if (state.filters.availability !== "all") {
+        const text = state.filters.availability === "in_stock" ? "In Stock Only" : "Out of Stock Only";
+        createBadge(text, () => {
+            state.filters.availability = "all";
+            const avail = document.getElementById('filterAvailabilitySelect');
+            if (avail) avail.value = "all";
+            applyFiltersAndRender();
+        });
+    }
+
+    // Flavour
+    if (state.filters.flavour !== "all") {
+        createBadge(`Flavour: ${state.filters.flavour}`, () => {
+            state.filters.flavour = "all";
+            const flav = document.getElementById('filterFlavourSelect');
+            if (flav) flav.value = "all";
             applyFiltersAndRender();
         });
     }
@@ -993,7 +1069,7 @@ function renderPerformanceTab() {
         .slice(0, 50); // Show top 50
 
     if (sortedProducts.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color: var(--color-secondary);">No products match the selected criteria.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: var(--color-secondary);">No products match the selected criteria.</td></tr>';
     } else {
         sortedProducts.forEach(p => {
             const tr = document.createElement('tr');
@@ -1006,14 +1082,13 @@ function renderPerformanceTab() {
                         <a href="#" class="product-link" onclick="openProductDrawer('${p.asin}'); return false;" title="${p.title}">${p.title}</a>
                     </div>
                     <div style="font-size: 10px; color: var(--color-secondary); margin-top:2px;">
-                        ASIN: ${p.asin} | ${p.category} | ${p.flavour} | ${p.weight} kg
+                        ASIN: ${p.asin} | ${p.category} | ${p.flavour} | ${p.size}
                     </div>
                 </td>
                 <td style="font-weight: 500;">${p.brand}</td>
                 <td style="font-weight: 600;">${formatCurrency(p.price)}</td>
                 <td><span class="stars-container">${renderStars(p.rating)} (${p.rating.toFixed(1)})</span></td>
                 <td>${p.reviews_count.toLocaleString()}</td>
-                <td style="font-family: monospace;">#${p.bsr !== 999999 ? p.bsr.toLocaleString() : 'N/A'}</td>
                 <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-weight: 600; min-width:24px;">${p.popularity_score}</span>
@@ -1185,33 +1260,7 @@ function renderPortfolioTab() {
     tableHTML += '</tbody>';
     assortment.innerHTML = tableHTML;
 
-    // B. Form Factor Donut Chart
-    const formCounts = {};
-    filteredProducts.forEach(p => {
-        formCounts[p.item_form] = (formCounts[p.item_form] || 0) + 1;
-    });
-
-    const ctxForm = document.getElementById('formFactorChart').getContext('2d');
-    chartInstances['formFactorChart'] = new Chart(ctxForm, {
-        type: 'doughnut',
-        data: {
-            labels: Object.keys(formCounts),
-            datasets: [{
-                data: Object.values(formCounts),
-                backgroundColor: ['#1E1E1E', '#4B5563', '#9CA3AF', '#D1D5DB', '#F3F4F6'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'bottom', labels: { boxWidth: 12, padding: 8 } }
-            }
-        }
-    });
-
-    // C. Flavor counts (horizontal bar)
+    // B. Assortment Diversity (Unique Flavor Counts)
     const flavorCounts = {};
     activeBrands.forEach(b => {
         const bProds = filteredProducts.filter(p => p.brand === b);
@@ -1245,7 +1294,7 @@ function renderPortfolioTab() {
         }
     });
 
-    // D. Portfolio compare table
+    // C. Portfolio compare table
     const tbody = document.querySelector('#portfolioCompareTable tbody');
     tbody.innerHTML = '';
 
@@ -1255,14 +1304,12 @@ function renderPortfolioTab() {
         if (count > 0) {
             const avgWeight = bProds.reduce((sum, p) => sum + p.weight, 0) / count;
             const avgServings = bProds.reduce((sum, p) => sum + p.servings, 0) / count;
-            const avgProtein = bProds.reduce((sum, p) => sum + p.protein, 0) / count;
             
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="font-weight:600;">${b}</td>
                 <td>${avgWeight.toFixed(2)} kg</td>
                 <td>${Math.round(avgServings)}</td>
-                <td>${avgProtein.toFixed(1)}g</td>
             `;
             tbody.appendChild(tr);
         }
@@ -1413,10 +1460,6 @@ function openProductDrawer(asin) {
                 <div class="drawer-info-val" style="color: var(--color-negative);">${product.discount}% OFF</div>
             </div>
             <div class="drawer-info-block">
-                <div class="drawer-info-lbl">Best Seller Rank</div>
-                <div class="drawer-info-val">#${product.bsr !== 999999 ? product.bsr.toLocaleString() : 'N/A'}</div>
-            </div>
-            <div class="drawer-info-block">
                 <div class="drawer-info-lbl">Popularity Score</div>
                 <div class="drawer-info-val" style="color: var(--color-accent);">${product.popularity_score} / 100</div>
             </div>
@@ -1443,24 +1486,20 @@ function openProductDrawer(asin) {
                     <td>${product.flavour}</td>
                 </tr>
                 <tr>
-                    <td>Weight</td>
+                    <td>Size</td>
+                    <td>${product.size}</td>
+                </tr>
+                <tr>
+                    <td>Weight (Parsed)</td>
                     <td>${product.weight} Kg</td>
                 </tr>
                 <tr>
-                    <td>Protein Content</td>
-                    <td>${product.protein}g</td>
-                </tr>
-                <tr>
                     <td>Servings Count</td>
-                    <td>${product.servings} Servings</td>
+                    <td>${product.servings ? product.servings + ' Servings' : 'Not specified'}</td>
                 </tr>
                 <tr>
-                    <td>Item Form</td>
-                    <td>${product.item_form}</td>
-                </tr>
-                <tr>
-                    <td>Diet Category</td>
-                    <td>${product.diet_type}</td>
+                    <td>Availability</td>
+                    <td>${product.availability}</td>
                 </tr>
             </table>
         </div>
@@ -1493,9 +1532,8 @@ function exportToCSV() {
 
     const headers = [
         "ASIN", "Title", "Brand", "Price", "MRP", "Discount %", 
-        "Rating", "Ratings Count", "Reviews Count", "Category", 
-        "BSR Rank", "Weight", "Flavour", "Protein (g)", "Servings", 
-        "Opportunity Class", "Amazon URL"
+        "Rating", "Reviews Count", "Availability", "Category", 
+        "Size", "Servings", "Flavour", "Opportunity Class", "Amazon URL"
     ];
 
     let csvContent = "data:text/csv;charset=utf-8,\ufeff";
@@ -1510,14 +1548,12 @@ function exportToCSV() {
             p.mrp,
             p.discount,
             p.rating,
-            p.ratings_count,
             p.reviews_count,
+            p.availability,
             p.category,
-            p.bsr,
-            p.weight,
-            p.flavour,
-            p.protein,
+            p.size,
             p.servings,
+            p.flavour,
             p.opportunity_class,
             p.url
         ];

@@ -1,5 +1,4 @@
 import csv
-import glob
 import json
 import os
 import re
@@ -8,7 +7,8 @@ import math
 def parse_price(val):
     if not val:
         return None
-    val_clean = re.sub(r"[^\d.]", "", val)
+    # Strip currency symbol and commas
+    val_clean = re.sub(r"[^\d.]", "", str(val))
     try:
         return float(val_clean)
     except ValueError:
@@ -17,7 +17,7 @@ def parse_price(val):
 def parse_int(val):
     if not val:
         return 0
-    val_clean = re.sub(r"[^\d]", "", val)
+    val_clean = re.sub(r"[^\d]", "", str(val))
     try:
         return int(val_clean)
     except ValueError:
@@ -27,61 +27,53 @@ def parse_rating(val):
     if not val:
         return 0.0
     # Match decimal number like "4.3"
-    match = re.search(r"(\d+\.?\d*)", val)
+    match = re.search(r"(\d+\.?\d*)", str(val))
     try:
         return float(match.group(1)) if match else 0.0
     except ValueError:
         return 0.0
 
-def parse_weight(row):
-    # Try weight field first, then parse from title
-    weight_str = row.get("weight", "") or ""
-    title_str = row.get("title", "") or ""
-    
-    combined = (weight_str + " " + title_str).lower()
-    
-    # Check for kg, lbs, g
-    # e.g., "1kg", "1 kg", "2.27 kg", "907g", "5 lbs", "2 lb"
-    match_kg = re.search(r"(\d+\.?\d*)\s*kg", combined)
-    if match_kg:
-        return float(match_kg.group(1))
+def parse_weight_from_size(size_str, title_str=""):
+    if not size_str:
+        size_str = ""
+    size_str = str(size_str).lower()
+    title_str = str(title_str).lower()
+    combined = size_str + " " + title_str
+
+    # Try finding kilograms (kg / kilograms)
+    kg_match = re.search(r"(\d+\.?\d*)\s*(kilograms|kg)", combined)
+    if kg_match:
+        return float(kg_match.group(1))
         
-    match_g = re.search(r"(\d+\.?\d*)\s*g(rams)?", combined)
-    if match_g:
-        return float(match_g.group(1)) / 1000.0
+    # Try finding grams (g / grams)
+    g_match = re.search(r"(\d+\.?\d*)\s*(grams|g)", combined)
+    if g_match:
+        return float(g_match.group(1)) / 1000.0
         
-    match_lbs = re.search(r"(\d+\.?\d*)\s*lb(s)?", combined)
-    if match_lbs:
-        return float(match_lbs.group(1)) * 0.453592
+    # Try finding lbs (lbs / lb)
+    lbs_match = re.search(r"(\d+\.?\d*)\s*(lbs|lb)", combined)
+    if lbs_match:
+        return float(lbs_match.group(1)) * 0.453592
         
     return 1.0 # default weight in kg
 
-def parse_protein(row):
-    title = row.get("title", "") or ""
-    specs = row.get("all_specs_json", "") or ""
-    combined = (title + " " + specs).lower()
-    
-    # Look for "24g", "24 g", "24.5g protein"
-    match = re.search(r"(\d+\.?\d*)\s*g\s*protein", combined)
+def parse_servings(servings_str):
+    if not servings_str:
+        return 0
+    servings_str = str(servings_str).lower()
+    match = re.search(r"(\d+)", servings_str)
     if match:
-        return float(match.group(1))
-    
-    # Try just "24g" or specs
-    match_g = re.search(r"(\d+\.?\d*)\s*g", row.get("protein_per_serving", "") or "")
-    if match_g:
-        return float(match_g.group(1))
-        
-    return 24.0 # default protein grams for supplements if not parsed
+        return int(match.group(1))
+    return 0
 
 def clean_category(val):
     if not val:
         return "Other"
     
-    # Extract last part of breadcrumb
     parts = val.split(">")
     cat = parts[-1].strip()
     
-    # Direct translation of Hindi terms
+    # Hindi mapping
     hindi_map = {
         "प्री-वर्कआउट": "Pre-Workout",
         "मटर प्रोटीन": "Pea Protein",
@@ -92,170 +84,126 @@ def clean_category(val):
     if cat in hindi_map:
         return hindi_map[cat]
         
-    # Standard mapping to clean categories
-    cat_lower = cat.lower()
-    if "whey" in cat_lower:
-        return "Whey Protein"
-    elif "isolate" in cat_lower:
-        return "Isolate Protein"
-    elif "creatine" in cat_lower:
-        return "Creatine"
-    elif "mass" in cat_lower or "gainer" in cat_lower:
-        return "Mass Gainer"
-    elif "pre-workout" in cat_lower or "pre workout" in cat_lower:
-        return "Pre-Workout"
-    elif "pea" in cat_lower or "plant" in cat_lower:
-        return "Plant Protein"
-    elif "casein" in cat_lower:
-        return "Casein Protein"
-    elif "bcaa" in cat_lower:
-        return "BCAA"
-    elif "glutamine" in cat_lower:
-        return "Glutamine"
-    elif "multivitamin" in cat_lower or "mineral" in cat_lower:
-        return "Multivitamins"
-    elif "shilajit" in cat_lower:
-        return "Shilajit"
-    elif "peanut" in cat_lower:
-        return "Peanut Butter"
-    elif "fish oil" in cat_lower or "omega" in cat_lower:
-        return "Omega & Fish Oil"
-    
-    return cat.strip()
+    return cat
 
 def main():
-    print("Processing scraped CSV files...")
+    csv_file = r"C:\WorkSpace\scrapper\Final file.csv"
+    print(f"Processing data from: {csv_file}")
     
-    csv_files = {
-        "optimum_nutrition": "optimum_nutrition_amazon_products.csv",
-        "muscleblaze": "muscleblaze_amazon_products.csv",
-        "nutrabay": "nutrabay_amazon_products.csv",
-        "nakpro": "nakpro_amazon_products.csv",
-        "as-it-is": "as-it-is_amazon_products.csv"
-    }
-    
+    if not os.path.exists(csv_file):
+        print(f"Error: {csv_file} does not exist!")
+        return
+
     brand_map = {
-        "optimum_nutrition": "Optimum Nutrition",
-        "muscleblaze": "MuscleBlaze",
         "nutrabay": "Nutrabay",
+        "optimum nutrition": "Optimum Nutrition",
         "nakpro": "Nakpro",
+        "muscleblaze nutrition": "MuscleBlaze",
+        "muscleblaze": "MuscleBlaze",
+        "as-it-is nutrition": "AS-IT-IS",
         "as-it-is": "AS-IT-IS"
     }
-    
+
     raw_products = []
     
-    for key, filename in csv_files.items():
-        if not os.path.exists(filename):
-            print(f"Warning: {filename} does not exist. Skipping.")
-            continue
+    with open(csv_file, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        count = 0
+        for row in reader:
+            asin = row.get("ASIN", "").strip()
+            title = row.get("Title", "").strip()
+            if not asin or not title:
+                continue
             
-        with open(filename, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            count = 0
-            for row in reader:
-                asin = row.get("asin", "").strip()
-                title = row.get("title", "").strip()
-                if not asin or not title:
-                    continue
+            # Brand clean
+            brand_raw = row.get("Brand", "").strip()
+            brand = brand_map.get(brand_raw.lower(), brand_raw)
+            
+            price = parse_price(row.get("Price"))
+            mrp = parse_price(row.get("MRP"))
+            
+            # Discount
+            discount = 0.0
+            disc_str = row.get("Discount%", "")
+            if disc_str:
+                disc_clean = re.sub(r"[^\d.]", "", str(disc_str))
+                try:
+                    discount = float(disc_clean)
+                except ValueError:
+                    pass
+            if not discount and mrp and price and mrp > price:
+                discount = round(((mrp - price) / mrp) * 100, 1)
+            
+            rating = parse_rating(row.get("Ratings"))
+            reviews_count = parse_int(row.get("Reviews"))
+            ratings_count = reviews_count # Map ratings_count to reviews_count for consistency
+            
+            category = clean_category(row.get("Category"))
+            
+            availability_raw = row.get("Availability", "").strip()
+            if availability_raw.lower() in ["in stock", "instock", "available"]:
+                availability = "In Stock"
+            else:
+                availability = "Out Of Stock"
                 
-                price = parse_price(row.get("price"))
-                mrp = parse_price(row.get("mrp"))
-                rating = parse_rating(row.get("rating"))
-                ratings_count = parse_int(row.get("num_ratings"))
-                reviews_count = parse_int(row.get("num_reviews"))
-                if not reviews_count:
-                    # Estimate reviews count if missing
-                    reviews_count = int(ratings_count * 0.12)
-                
-                # Discount calculation
-                discount = 0.0
-                disc_str = row.get("discount_percent", "")
-                if disc_str:
-                    disc_clean = re.sub(r"[^\d.]", "", disc_str)
-                    try:
-                        discount = float(disc_clean)
-                    except ValueError:
-                        pass
-                if not discount and mrp and price and mrp > price:
-                    discount = round(((mrp - price) / mrp) * 100, 1)
-                
-                # Standardize category
-                category = clean_category(row.get("category_breadcrumb"))
-                
-                # BSR Extraction
-                bsr = 999999
-                bsr_str = row.get("best_seller_rank", "")
-                if bsr_str:
-                    bsr_match = re.search(r"#(\d{1,3}(?:,\d{3})*)", bsr_str)
-                    if bsr_match:
-                        bsr = int(bsr_match.group(1).replace(",", ""))
-                
-                # Specifications
-                weight = parse_weight(row)
-                flavour = row.get("flavour", "").strip() or "Unflavoured"
-                protein = parse_protein(row)
-                servings = parse_int(row.get("servings")) or int(weight * 30)
-                item_form = row.get("item_form", "").strip() or "Powder"
-                diet_type = row.get("diet_type", "").strip() or "Vegetarian"
-                
-                raw_products.append({
-                    "asin": asin,
-                    "title": title,
-                    "brand": brand_map[key],
-                    "price": price or (mrp or 1000.0), # fallback
-                    "mrp": mrp or price or 1000.0,
-                    "discount": discount,
-                    "rating": rating or 4.0, # default if 0
-                    "ratings_count": ratings_count,
-                    "reviews_count": reviews_count,
-                    "category": category,
-                    "bsr": bsr,
-                    "weight": round(weight, 2),
-                    "flavour": flavour,
-                    "protein": protein,
-                    "servings": servings,
-                    "item_form": item_form,
-                    "diet_type": diet_type,
-                    "image": row.get("main_image_url", "").strip() or "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?w=400",
-                    "url": row.get("url", "").strip() or f"https://www.amazon.in/dp/{asin}",
-                    "scraped_at": row.get("scraped_at", "").strip() or "2026-06-20T12:00:00"
-                })
-                count += 1
-            print(f"Parsed {count} products from {filename}")
+            url = row.get("URL", "").strip()
+            size = row.get("Size", "").strip() or "Not specified"
+            servings = parse_servings(row.get("Servings"))
+            flavour = row.get("Flavour", "").strip() or "Unflavoured"
+            
+            weight = parse_weight_from_size(size, title)
+            
+            raw_products.append({
+                "asin": asin,
+                "title": title,
+                "brand": brand,
+                "price": price or (mrp or 1000.0),
+                "mrp": mrp or price or 1000.0,
+                "discount": discount,
+                "rating": rating or 4.0,
+                "ratings_count": ratings_count,
+                "reviews_count": reviews_count,
+                "category": category,
+                "availability": availability,
+                "url": url or f"https://www.amazon.in/dp/{asin}",
+                "size": size,
+                "servings": servings,
+                "flavour": flavour,
+                "weight": round(weight, 2),
+                # Fallback image URL
+                "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?w=400"
+            })
+            count += 1
+            
+        print(f"Parsed {count} products from {csv_file}")
 
     if not raw_products:
         print("No products parsed! Exiting.")
         return
 
     # Normalize stats for business scoring
-    max_ratings = max(p["ratings_count"] for p in raw_products) or 1
     max_reviews = max(p["reviews_count"] for p in raw_products) or 1
-    max_bsr = max(p["bsr"] for p in raw_products) or 1
     
     # Calculate derived business scores for each product
     for p in raw_products:
-        # 1. Demand Score (log scale to control outliers)
-        raw_demand = p["ratings_count"] + (p["reviews_count"] * 2)
-        demand_score = min(100.0, max(0.0, (math.log10(raw_demand + 1) / math.log10(max_ratings + 2*max_reviews + 1)) * 100))
+        # 1. Demand Score (log scale of reviews)
+        raw_demand = p["reviews_count"]
+        demand_score = min(100.0, max(0.0, (math.log10(raw_demand + 1) / math.log10(max_reviews + 1)) * 100))
         p["demand_score"] = round(demand_score, 1)
         
         # 2. Product Popularity Score (Rating * Demand Log)
-        popularity_score = (p["rating"] / 5.0) * demand_score * 0.7 + (1.0 - min(1.0, p["bsr"] / 50000.0)) * 30.0
+        popularity_score = (p["rating"] / 5.0) * demand_score
         p["popularity_score"] = round(min(100.0, max(0.0, popularity_score)), 1)
         
-        # 3. Value Score (Protein per price unit and rating)
-        protein_ratio = p["protein"] / p["price"] if p["price"] else 0
-        # Scale to max ratio in dataset
-        val_score = (protein_ratio * 1000) * 10.0 + (p["rating"] * 8.0)
+        # 3. Value Score (Weighted based on Rating, Discount, and Price)
+        val_score = (p["rating"] * 10.0) + (p["discount"] * 0.6) + (1.0 - min(1.0, p["price"] / 6000.0)) * 20.0
         p["value_score"] = round(min(100.0, max(0.0, val_score)), 1)
         
-        # 4. Competitive Score (Index of popularity, rating, BSR position)
-        comp_score = (p["popularity_score"] * 0.4) + (p["demand_score"] * 0.3) + (p["rating"] * 20.0 * 0.3)
+        # 4. Competitive Score (Index of popularity, rating, demand)
+        comp_score = (p["popularity_score"] * 0.5) + (p["demand_score"] * 0.2) + (p["rating"] * 20.0 * 0.3)
         p["competitive_score"] = round(min(100.0, max(0.0, comp_score)), 1)
         
         # 5. Sentiment metrics
-        # Positive sentiment estimated from rating (e.g. 5 stars = 100%, 1 star = 0%)
-        # Normal distributions based on rating:
         pos_pct = min(100.0, max(0.0, (p["rating"] - 1.0) / 4.0 * 100.0 + 5.0))
         p["sentiment_positive"] = round(pos_pct, 1)
         p["sentiment_negative"] = round(100.0 - pos_pct, 1)
@@ -289,7 +237,7 @@ def main():
         classified_products.append(p)
 
     # Calculate Brand-Level Aggregations
-    brands = list(brand_map.values())
+    brands = list(set(p["brand"] for p in classified_products))
     brand_stats = {}
     for b in brands:
         b_prods = [p for p in classified_products if p["brand"] == b]
@@ -334,7 +282,6 @@ def main():
         }
 
     # Opportunity: White Space Detection
-    # Categories with moderate/high average ratings, high average price, but low competition (< 10 products total)
     white_spaces = []
     for c, stats in category_stats.items():
         if stats["product_count"] < 12 and stats["avg_rating"] >= 4.0:
@@ -351,7 +298,7 @@ def main():
     # Consolidated JSON database output
     output_data = {
         "metadata": {
-            "scraped_date": "2026-06-20",
+            "scraped_date": "2026-06-21",
             "total_products": len(classified_products),
             "total_ratings": sum(p["ratings_count"] for p in classified_products),
             "total_reviews": sum(p["reviews_count"] for p in classified_products),

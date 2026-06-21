@@ -1254,3 +1254,186 @@ a {
     color: var(--color-accent); /* High-contrast Amazon Orange for dark backgrounds */
     font-weight: 700;
 }
+
+/* RESPONSIVE LAYOUT STYLING */
+
+/* Tablet Viewport Optimization */
+@media (max-width: 1024px) {
+    /* Collapse grids */
+    .col-span-8, .col-span-7, .col-span-6, .col-span-5, .col-span-4, .col-span-3 {
+        grid-column: span 12;
+    }
+    
+    /* Make right filter pane act as a slide-out overlay drawer */
+    .filter-pane {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        z-index: 100;
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+        margin-right: 0;
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .filter-pane.closed {
+        margin-right: 0; /* Reset desktop margin slide */
+        transform: translateX(100%);
+    }
+}
+
+/* Mobile Viewport Optimization */
+@media (max-width: 768px) {
+    /* Stack application container direction */
+    .app-container {
+        flex-direction: column;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    /* Force main layout to fill the viewport width */
+    .main-layout {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-grow: 1;
+    }
+
+    /* Show hamburger menu toggle on mobile */
+    .mobile-menu-btn {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    /* Top command bar responsiveness */
+    .top-bar {
+        padding: 0 16px;
+        gap: 12px;
+        height: 60px;
+    }
+    .search-box {
+        width: 160px;
+    }
+    .search-input {
+        height: 36px;
+        font-size: 12px;
+        padding-left: 32px;
+    }
+    .search-icon {
+        left: 10px;
+    }
+    .active-filters {
+        margin-left: 8px;
+        gap: 6px;
+    }
+    
+    /* Shrink action buttons to only show icons on small screen */
+    .action-btn {
+        height: 36px;
+        padding: 0 12px;
+    }
+    .action-btn span {
+        display: none !important;
+    }
+    
+    /* Left sidebar mobile overlay behavior */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 260px;
+        z-index: 150;
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+        width: 260px; /* keep slide dimension static */
+    }
+    
+    /* Adjust content top margin for fixed sidebar overlay toggle */
+    .workspace-wrapper {
+        margin-top: 0;
+    }
+    .content-container {
+        padding: 16px;
+    }
+
+    /* Dynamic grid overrides */
+    .col-span-12, .col-span-8, .col-span-7, .col-span-6, .col-span-5, .col-span-4, .col-span-3 {
+        grid-column: span 12;
+    }
+    
+    /* McKinsey matrix styling adjustments */
+    .matrix-table th, .matrix-table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    /* Landing Page Responsiveness */
+    .landing-header {
+        height: 70px;
+        padding: 0 16px;
+    }
+    .landing-nav {
+        display: none !important; /* Hide links to avoid wrapping clutter */
+    }
+    .landing-hero {
+        padding: 60px 16px 40px 16px;
+    }
+    .hero-title {
+        font-size: 28px !important;
+    }
+    .hero-subtitle {
+        font-size: 14px;
+    }
+}
+
+/* Extra Small Mobile Optimization */
+@media (max-width: 576px) {
+    .top-bar {
+        padding: 0 10px;
+        gap: 8px;
+    }
+    .search-box {
+        width: 120px;
+    }
+    
+    /* Detail drawer overlay fills viewport */
+    .detail-drawer {
+        width: 100% !important;
+        right: -100% !important;
+        padding: 30px 16px !important;
+    }
+    .detail-drawer.open {
+        right: 0 !important;
+    }
+    .drawer-body-grid {
+        grid-template-columns: 1fr; /* single column block */
+    }
+    
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .kpi-card {
+        padding: 12px 16px;
+    }
+    .kpi-value {
+        font-size: 18px;
+    }
+
+    /* Landing hero actions stacking */
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+    .btn-primary-large, .btn-secondary-large {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+}

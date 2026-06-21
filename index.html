@@ -288,6 +288,9 @@
         <main class="main-layout">
             <!-- TOP COMMAND BAR -->
             <header class="top-bar">
+                <button class="action-btn mobile-menu-btn" id="mobileMenuBtn" style="display: none;" title="Toggle Sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
                 <div class="search-box">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" class="search-icon">
@@ -556,7 +559,6 @@
                                             <th>Price</th>
                                             <th>Rating</th>
                                             <th>Reviews</th>
-                                            <th>BSR Rank</th>
                                             <th>Popularity</th>
                                             <th style="width: 80px; text-align: center;">Action</th>
                                         </tr>
@@ -633,30 +635,18 @@
                         </div>
 
                         <div class="dashboard-grid">
-                            <!-- Category Coverage Grid -->
-                            <div class="col-span-7 card">
-                                <div class="card-header">
-                                    <h2>Assortment Matrix (Category Penetration)</h2>
-                                    <span class="card-subtitle">Total product count by category and brand</span>
-                                </div>
-                                <div class="table-wrapper">
-                                    <table class="matrix-table" id="assortmentMatrixTable">
-                                        <!-- Injected by JS -->
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Form factor Distribution -->
-                            <div class="col-span-5 card">
-                                <div class="card-header">
-                                    <h2>Item Form Factor split</h2>
-                                    <span class="card-subtitle">Distribution of catalog across powders, tablets,
-                                        capsules</span>
-                                </div>
-                                <div class="chart-container" style="height: 250px;">
-                                    <canvas id="formFactorChart"></canvas>
-                                </div>
-                            </div>
+                             <!-- Category Coverage Grid -->
+                             <div class="col-span-12 card">
+                                 <div class="card-header">
+                                     <h2>Assortment Matrix (Category Penetration)</h2>
+                                     <span class="card-subtitle">Total product count by category and brand</span>
+                                 </div>
+                                 <div class="table-wrapper">
+                                     <table class="matrix-table" id="assortmentMatrixTable">
+                                         <!-- Injected by JS -->
+                                     </table>
+                                 </div>
+                             </div>
                         </div>
 
                         <div class="dashboard-grid">
@@ -671,11 +661,11 @@
                                 </div>
                             </div>
 
-                            <!-- Protein / weight metrics summary -->
+                            <!-- Portfolio Metrics Comparison -->
                             <div class="col-span-6 card">
                                 <div class="card-header">
                                     <h2>Portfolio Metrics Comparison</h2>
-                                    <span class="card-subtitle">Avg weight, serving sizes and protein counts</span>
+                                    <span class="card-subtitle">Avg weight and serving sizes</span>
                                 </div>
                                 <div class="table-wrapper">
                                     <table class="data-table" id="portfolioCompareTable">
@@ -684,7 +674,6 @@
                                                 <th>Brand</th>
                                                 <th>Avg Weight (Kg)</th>
                                                 <th>Avg Servings</th>
-                                                <th>Avg Protein (g)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -803,16 +792,26 @@
                             </div>
                         </div>
 
-                        <!-- Rating -->
+                        <!-- Ratings Range -->
                         <div class="filter-group">
-                            <h4 class="filter-title">Minimum Rating</h4>
-                            <div class="rating-filter-wrapper">
-                                <select id="filterRatingSelect" class="filter-select">
-                                    <option value="0">All Ratings</option>
-                                    <option value="4.5">4.5+ Stars</option>
-                                    <option value="4.0">4.0+ Stars</option>
-                                    <option value="3.5">3.5+ Stars</option>
-                                    <option value="3.0">3.0+ Stars</option>
+                            <h4 class="filter-title">Ratings Range</h4>
+                            <div class="price-inputs">
+                                <select id="filterRatingMin" class="filter-select" style="flex: 1;">
+                                    <option value="0">Min (0)</option>
+                                    <option value="1">1 ★</option>
+                                    <option value="2">2 ★</option>
+                                    <option value="3">3 ★</option>
+                                    <option value="4">4 ★</option>
+                                    <option value="4.5">4.5 ★</option>
+                                </select>
+                                <span class="price-separator">to</span>
+                                <select id="filterRatingMax" class="filter-select" style="flex: 1;">
+                                    <option value="5">Max (5)</option>
+                                    <option value="4.5">4.5 ★</option>
+                                    <option value="4">4 ★</option>
+                                    <option value="3">3 ★</option>
+                                    <option value="2">2 ★</option>
+                                    <option value="1">1 ★</option>
                                 </select>
                             </div>
                         </div>
@@ -830,11 +829,22 @@
                         <!-- Availability -->
                         <div class="filter-group">
                             <h4 class="filter-title">Availability</h4>
-                            <div class="filter-options-list">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="in_stock" id="filterStockIn" checked>
-                                    <span>In Stock Only</span>
-                                </label>
+                            <div class="rating-filter-wrapper">
+                                <select id="filterAvailabilitySelect" class="filter-select">
+                                    <option value="all">All Statuses</option>
+                                    <option value="in_stock">In Stock Only</option>
+                                    <option value="out_of_stock">Out of Stock Only</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Flavour -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Flavour</h4>
+                            <div class="rating-filter-wrapper">
+                                <select id="filterFlavourSelect" class="filter-select">
+                                    <option value="all">All Flavours</option>
+                                </select>
                             </div>
                         </div>
                     </div>

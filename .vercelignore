@@ -1,0 +1,26 @@
+# Exclude raw scraped CSV datasets
+*.csv
+
+# Exclude large video assets (exceeds static host limits)
+*.mp4
+NUTRITION INTEL.mp4
+
+# Exclude python environments
+venv/
+.venv/
+env/
+Scripts/
+Lib/
+
+# Exclude git directories
+.git/
+.gitignore
+
+# Exclude python scrapers and development scripts
+scrapper.py
+scrapper1.py
+remove_blocker.py
+process_data.py
+app.py
+run.txt
+scratch/
