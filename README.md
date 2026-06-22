@@ -43,7 +43,6 @@ Raw Amazon Data
 ### 1. Data Collection (`/scraping`)
 - **Tool**: Apify (cloud-based web scraping)
 - **Scope**: Amazon.in product listings, specifications, pricing, reviews
-- **Frequency**: Monthly refreshes
 - **Output**: Structured JSON/CSV datasets
 
 **Key Data Points Captured**:
