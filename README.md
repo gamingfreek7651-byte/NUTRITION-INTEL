@@ -250,9 +250,8 @@ Improvements welcome! Areas we're looking for help:
 
 ## Author
 
-**Built by**: Yogesh Kumar  
+**Built by**: Yogesh Kumar
 **Last Updated**: June 2026  
-**Update Frequency**: Monthly
 
 ## License
 
