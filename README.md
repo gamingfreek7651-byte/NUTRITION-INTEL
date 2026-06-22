@@ -10,17 +10,14 @@ This project aggregates and analyzes the Amazon India sports nutrition segment, 
 
 ### 🌟 Project Preview
 
-![Power BI Dashboard](dashboard.png)
+![Power BI Dashboard](<img width="1672" height="941" alt="a2874619-6fe2-42e0-bb52-8c7e4cc445c8" src="https://github.com/user-attachments/assets/96907834-b03e-488c-b61e-ea3fc52b1e0f" />
+)
 
 ![App Interface Preview](APP.png)
 
 ---
 
-## 🎥 Demonstration Video
-
-Below is a video walkthrough showcasing the dashboard and its features:
-
-<video src="NUTRITION%20INTEL%20%281%29.mp4" width="100%" controls></video>
+## URL https://nutrition-intel-6mokb8tve-exio5459m.vercel.app/
 
 ---
 
